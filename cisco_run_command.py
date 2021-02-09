@@ -38,7 +38,7 @@ print('Connecting to devices and running command...Please wait...')
 for ip in ipAddr:
       net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=userName, password=userPassword)
       output = net_connect.send_command(command)
-      print(output, file=open('output' + '.txt', "a"))
+      print(output, file=open(ipAddr[counter] + '.txt', "a"))
       net_connect.disconnect()
       counter += 1
 print('Check the output.txt file')
