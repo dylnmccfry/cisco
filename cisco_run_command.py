@@ -41,4 +41,4 @@ for ip in ipAddr:
       print(output, file=open(ipAddr[counter] + '.txt', "a"))
       net_connect.disconnect()
       counter += 1
-print('Check the output.txt file')
+print('Check the output files created.')
