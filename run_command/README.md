@@ -15,10 +15,13 @@ What command would you like to run?
 show ver
 Enter list of IP addresses. Type "END" to indicate the end of the list, and start the script.
 192.168.1.4
-192.168.1.4
-
+192.168.1.5
+192.168.1.6
 END
 Connecting to devices and running command...Please wait...
+Connecting to 192.168.1.4
+Connecting to 192.168.1.5
+Connecting to 192.168.1.6
 Check the output.txt file
 ```
 
