@@ -9,7 +9,10 @@ python3 cisco_run_command.py
 ```
 ## Example Output
 ```python3
-admin@ubuntu:/home/dylan/python-scripts$ python3 show-version.py
+admin@ubuntu:/home/dylan/python-scripts$ python3 cisco_run_command.py
+Username:
+Password:
+Alternate local account in case TACACS+ isn't working:
 Password:
 What command would you like to run?
 show ver
