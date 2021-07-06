@@ -47,20 +47,26 @@ for ip in ipAddr:
         net_connect.disconnect()
 #Fallback section in case first username doesn't work
     except:
-        net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=altUser, password=altPassword)
-        output = net_connect.send_command(command)
-        print(output, file=open(ipAddr[counter] + '.txt', "a"))
-        net_connect.disconnect()
-#Fallback to trying Telnet if SSH section above doesn't work
-    except:
-        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=userName, password=userPassword)
-        output = net_connect.send_command(command)
-        print(output, file=open(ipAddr[counter] + '.txt', "a"))
-        net_connect.disconnect()
-    except:
-        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=altUser, password=altPassword)
-        output = net_connect.send_command(command)
-        print(output, file=open(ipAddr[counter] + '.txt', "a"))
-        net_connect.disconnect()
+        try:
+            net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=altUser, password=altPassword)
+            output = net_connect.send_command(command)
+            print(output, file=open(ipAddr[counter] + '.txt', "a"))
+            net_connect.disconnect()
+    #Fallback to trying Telnet if SSH section above doesn't work
+        except:
+            try:
+                net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=userName, password=userPassword)
+                output = net_connect.send_command(command)
+                print(output, file=open(ipAddr[counter] + '.txt', "a"))
+                net_connect.disconnect()
+            except:
+                try:
+                    net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=altUser, password=altPassword)
+                    output = net_connect.send_command(command)
+                    print(output, file=open(ipAddr[counter] + '.txt', "a"))
+                    net_connect.disconnect()
+                except:
+                    print("Unable to connect to device using SSH or Telnet")
+
     counter += 1
 print('Check the output files created.')
