@@ -1,6 +1,6 @@
 # cisco_run_command.py
 
-This script will prompt you to enter a command you want to run against a list of hosts. By providing a list of IP addresses it will execute that command and send the output to a file named <IP ADDRESS>.txt
+This script will prompt you to enter a command you want to run against a list of hosts. By providing a list of IP addresses it will execute that command and send the output to a text file for each host, the filename is the IP address.
 
 ## Usage
 
