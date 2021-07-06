@@ -4,8 +4,9 @@ import re
 from netmiko import ConnectHandler
 ###Imports getpass module for username and password functions
 import getpass
+#userName = getpass.getuser()
+userName = input("Username: ")
 userPassword = getpass.getpass()
-userName = getpass.getuser()
 ###Sets counter used in loop to reference device in ipAddr list
 counter = 0
 ###Sets regex to check if IP address is valid
@@ -36,9 +37,28 @@ while newIP != 'END':
          break
 print('Connecting to devices and running command...Please wait...')
 for ip in ipAddr:
-      net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=userName, password=userPassword)
-      output = net_connect.send_command(command)
-      print(output, file=open(ipAddr[counter] + '.txt', "a"))
-      net_connect.disconnect()
-      counter += 1
+    print("Connecting to " + ip)
+    try:
+        net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=userName, password=userPassword)
+        output = net_connect.send_command(command)
+        print(output, file=open(ipAddr[counter] + '.txt', "a"))
+        net_connect.disconnect()
+#Fallback section in case first username doesn't work
+    except:
+        net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username="username", password="password")
+        output = net_connect.send_command(command)
+        print(output, file=open(ipAddr[counter] + '.txt', "a"))
+        net_connect.disconnect()
+#Fallback to trying Telnet if SSH section above doesn't work
+    except:
+        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=userName, password=userPassword)
+        output = net_connect.send_command(command)
+        print(output, file=open(ipAddr[counter] + '.txt', "a"))
+        net_connect.disconnect()
+    except:
+        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username="username", password="password")
+        output = net_connect.send_command(command)
+        print(output, file=open(ipAddr[counter] + '.txt', "a"))
+        net_connect.disconnect()
+    counter += 1
 print('Check the output files created.')
