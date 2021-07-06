@@ -1,0 +1,5 @@
+[
+{"macAddress": "aaaaaa.aaaaaa", "hostname": "us6645ny-mc01-ap01", "switchHostname": "us6645ny-mc01-sw01", "switchInterface": "Gi1/0/1", "sdwan": "yes"},
+{"macAddress": "bb-bb-bb-bb-bb-bb", "hostname": "us6645ny-mc01-ap02", "switchHostname": "us6645ny-mc01-sw02", "switchInterface": "Gi1/0/2", "sdwan": "no"},
+{"macAddress": "bb-bb-bb-bb-bb-bb", "hostname": "us6645ny-mc01-ap02", "switchHostname": "us6645ny-mc01-sw02", "switchInterface": "Gi1/0/2", "sdwan": "no"},
+]
