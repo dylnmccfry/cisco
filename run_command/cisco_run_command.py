@@ -7,6 +7,8 @@ import getpass
 #userName = getpass.getuser()
 userName = input("Username: ")
 userPassword = getpass.getpass()
+altUser = input("Alternate local user account in case TACACS+ isn't working: ")
+altPassword = input("Alternate local password in case TACACS+ isn't working: ")
 ###Sets counter used in loop to reference device in ipAddr list
 counter = 0
 ###Sets regex to check if IP address is valid
@@ -45,7 +47,7 @@ for ip in ipAddr:
         net_connect.disconnect()
 #Fallback section in case first username doesn't work
     except:
-        net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username="username", password="password")
+        net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=altUser, password=altPassword)
         output = net_connect.send_command(command)
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
         net_connect.disconnect()
@@ -56,7 +58,7 @@ for ip in ipAddr:
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
         net_connect.disconnect()
     except:
-        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username="username", password="password")
+        net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=altUser, password=altPassword)
         output = net_connect.send_command(command)
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
         net_connect.disconnect()
