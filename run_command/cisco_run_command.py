@@ -8,7 +8,7 @@ import getpass
 userName = input("Username: ")
 userPassword = getpass.getpass()
 altUser = input("Alternate local user account in case TACACS+ isn't working: ")
-altPassword = input("Alternate local password in case TACACS+ isn't working: ")
+altPassword = getpass.getpass()
 ###Sets counter used in loop to reference device in ipAddr list
 counter = 0
 ###Sets regex to check if IP address is valid
