@@ -34,7 +34,7 @@ while newIP != 'END':
          ipAddr.append(newIP)
       if newIP == 'END':
          break
-print('Connecting to devices and running command...Please wait...')
+print('Connecting to devices and running prechecks...Please wait...')
 for ip in ipAddr:
     print("Connecting to " + ip)
     try:
