@@ -47,12 +47,14 @@ for ip in ipAddr:
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
         output = net_connect.send_command('show ip arp')
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
-        output = net_connect.send_command('show mac address-table')
+        output = net_connect.send_command('show mac address-table dynamic')
         print(output, file=open(ipAddr[counter] + '.txt', "a"))
         net_connect.disconnect()
 #Fallback section in case first username doesn't work
     except:
+
         try:
+            print('Unable to use ' + userName + ' trying ' + altUser)
             net_connect = ConnectHandler(device_type='cisco_ios', host=ipAddr[counter], username=altUser, password=altPassword)
             output = net_connect.send_command('show cdp neighbor')
             print(output, file=open(ipAddr[counter] + '.txt', "a"))
@@ -62,13 +64,14 @@ for ip in ipAddr:
             print(output, file=open(ipAddr[counter] + '.txt', "a"))
             output = net_connect.send_command('show ip arp')
             print(output, file=open(ipAddr[counter] + '.txt', "a"))
-            output = net_connect.send_command('show mac address-table')
+            output = net_connect.send_command('show mac address-table dynamic')
             print(output, file=open(ipAddr[counter] + '.txt', "a"))
             net_connect.disconnect()
     #Fallback to trying Telnet if SSH section above doesn't work
         except:
             try:
-                net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=userName, password=userPassword)
+                print('Unable to use SSH, trying Telnet')
+                net_connect = ConnectHandler(device_type='cisco_ios_telnet', ip=ipAddr[counter], username=userName, password=userPassword, secret=userPassword, global_delay_factor=5)
                 output = net_connect.send_command('show cdp neighbor')
                 print(output, file=open(ipAddr[counter] + '.txt', "a"))
                 output = net_connect.send_command('show run')
@@ -77,12 +80,13 @@ for ip in ipAddr:
                 print(output, file=open(ipAddr[counter] + '.txt', "a"))
                 output = net_connect.send_command('show ip arp')
                 print(output, file=open(ipAddr[counter] + '.txt', "a"))
-                output = net_connect.send_command('show mac address-table')
+                output = net_connect.send_command('show mac address-table dynamic')
                 print(output, file=open(ipAddr[counter] + '.txt', "a"))
                 net_connect.disconnect()
             except:
                 try:
-                    net_connect = ConnectHandler(device_type='cisco_ios_telnet', host=ipAddr[counter], username=altUser, password=altPassword)
+                    print('Unable to use ' + userName + ' trying ' + altUser)
+                    net_connect = ConnectHandler(host=ipAddr[counter], device_type='cisco_ios_telnet', username=userName, password=userPassword, secret=userPassword, global_delay_factor=5)
                     output = net_connect.send_command('show cdp neighbor')
                     print(output, file=open(ipAddr[counter] + '.txt', "a"))
                     output = net_connect.send_command('show run')
@@ -91,7 +95,7 @@ for ip in ipAddr:
                     print(output, file=open(ipAddr[counter] + '.txt', "a"))
                     output = net_connect.send_command('show ip arp')
                     print(output, file=open(ipAddr[counter] + '.txt', "a"))
-                    output = net_connect.send_command('show mac address-table')
+                    output = net_connect.send_command('show mac address-table dynamic')
                     print(output, file=open(ipAddr[counter] + '.txt', "a"))
                     net_connect.disconnect()
                 except:
