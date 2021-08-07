@@ -1,0 +1,47 @@
+---
+- name: Prechecks - show run, show mac address table, show ip arp, show int status
+  hosts: precheck_devices
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: SSH - show run, show mac table, show ip arp, show cdp neighbor, show int status
+      block:
+#####Try SSH first
+        - name: SSH - show run, show mac table, show ip arp, show cdp neighbor, show int status
+          ios_command:
+            commands:
+            - show run
+            - show mac address-table dynamic
+            - show ip arp
+            - show cdp neighbor
+            - show int status
+          register: output
+
+        - name: save output to file
+          copy:
+            content: "{{ output.stdout }}"
+            dest: "./show-output/{{ inventory_hostname }}.txt"
+
+      rescue:
+        - name: Telnet - show ip arp, show cdp neighbor, show int status, show mac address-table dynamic, show run
+          telnet:
+            login_prompt: "Username:"
+            password_prompt: "Password:"
+            send_newline: "yes"
+            prompts:
+            - '#$'
+            command:
+            - terminal length 0
+            - show ip arp
+            - show interface status
+            - show cdp neighbor
+            - show mac address-table dynamic
+            - show run
+            timeout: 30
+          register: telnet_output
+
+        - name: save output to file
+          copy:
+            content: "{{ telnet_output.output[1] }} {{ telnet_output.output[2] }} {{ telnet_output.output[3] }} {{ telnet_output.output[4] }} {{ telnet_output.output[5] }}"
+            dest: "./show-output/{{ inventory_hostname }}.txt"
