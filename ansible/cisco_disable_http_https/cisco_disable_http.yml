@@ -1,0 +1,35 @@
+---
+
+- name: Disable HTTP and HTTPS
+  hosts: http_devices
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: Try telnet then SSH
+      block:
+        - name: Trying to connect via Telnet
+
+          telnet:
+            login_prompt: "Username: "
+            password_prompt: "Password:"
+            prompts:
+              - '[>|#]'
+            command:
+              - "enable\nCisco"
+              - config t
+              - no ip http server
+              - no ip http secure-server
+              - end
+              - wr mem
+
+      rescue:
+
+        - name: Trying to connect via SSH
+          ios_config:
+            lines:
+              - no ip http server
+              - no ip http secure-server
+
+        - name: Saving config via SSH
+          ios_config:
+            save_when: modified
