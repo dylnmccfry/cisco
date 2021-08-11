@@ -5,7 +5,7 @@
   connection: local
 
   tasks:
-    - name: SSH - show run, show mac table, show ip arp, show cdp neighbor, show int status
+    - name: Trying SSH
       block:
 #####Try SSH first
         - name: SSH - show run, show mac table, show ip arp, show cdp neighbor, show int status
@@ -20,7 +20,7 @@
 
         - name: save output to file
           copy:
-            content: "{{ output.stdout }}"
+            content: "{{ output.stdout | replace('\\n', '\n') }}"
             dest: "./show-output/{{ inventory_hostname }}.txt"
 
       rescue:
