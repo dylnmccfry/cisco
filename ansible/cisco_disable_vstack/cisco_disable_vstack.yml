@@ -1,0 +1,33 @@
+---
+- name: Disable vstack
+  hosts: vstack_devices
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Trying SSH
+      block:
+#####Try SSH first
+        - name: SSH - Disable vstack
+          ios_config:
+            lines:
+            - no vstack
+
+        - name: Saving config via SSH
+          ios_config:
+            save_when: modified
+
+      rescue:
+        - name: Trying Telnet - Disable vstack and save config
+          telnet:
+            login_prompt: "Username:"
+            password_prompt: "Password:"
+            send_newline: "yes"
+            prompts:
+            - '#$'
+            command:
+            - config t
+            - no vstack
+            - end
+            - wr
+            timeout: 30
