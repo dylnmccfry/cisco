@@ -18,3 +18,6 @@ This will provide the network ID for a specified network, using a GUI.
 
 ## reboot.py
 This will reboot the devices.
+
+## claim_device_rename.py
+This will claim devices to an org & network, and rename them using the devices.csv values.
