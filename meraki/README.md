@@ -6,4 +6,4 @@ pip3 install meraki
 ```
 ## Usage
 ```python
-python3 get_switch_ports_config.py```
+python3 get_switch_ports_config.py
