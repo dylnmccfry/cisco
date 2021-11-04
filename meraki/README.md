@@ -15,3 +15,6 @@ This uses the information in devices.csv to assign the IP address and will promp
 
 ## get_network_id.py
 This will provide the network ID for a specified network, using a GUI.
+
+## reboot.py
+This will reboot the devices.
