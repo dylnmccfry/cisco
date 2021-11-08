@@ -1,0 +1,79 @@
+---
+- hosts: ios
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Creating VLAN on 9500s
+    ios_vlans:
+      config:
+      - vlan_id: "{{ vlan_id }}"
+        name: "{{ vlan_name }}"
+
+  - name: "Save Config"
+    ios_config:
+      save_when: "modified"
+
+
+- hosts: nexus1
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Assigning IP address to Nexus1
+    nxos_config:
+      lines:
+      - ip address {{ ip_address1 }}
+      - description "{{ vlan_name }}"
+      - ip dhcp relay address {{ ip_helper1 }}
+      - ip dhcp relay address {{ ip_helper2 }}
+      - ip router eigrp EIGRP-GRT
+      - no shutdown
+      - no ip redirects
+      - hsrp version 2
+      - hsrp {{ hsrp_group }}
+      - preempt
+      - priority 105
+      - timers  1  3
+      - ip {{ vip_address }}
+      parents: interface {{ interface }}
+
+  - name: Creating VLANs on Nexus1
+    nxos_vlans:
+      config:
+      - vlan_id: "{{ vlan_id }}"
+        name: "{{ vlan_name }}"
+
+
+  - name: "Save Config"
+    nxos_config:
+      save_when: "modified"
+
+- hosts: nexus2
+  gather_facts: false
+  connection: local
+  tasks:
+  - name: Assigning IP address to Nexus2 interface
+    nxos_config:
+      lines:
+      - ip address {{ ip_address2 }}
+      - description "{{ vlan_name }}"
+      - ip dhcp relay address {{ ip_helper1 }}
+      - ip dhcp relay address {{ ip_helper2 }}
+      - ip router eigrp EIGRP-GRT
+      - no shutdown
+      - no ip redirects
+      - hsrp version 2
+      - hsrp {{ hsrp_group }}
+      - preempt
+      - timers  1  3
+      - ip {{ vip_address }}
+      parents: interface {{ interface }}
+
+  - name: Creating VLANs on Nexus2
+    nxos_vlans:
+      config:
+      - vlan_id: "{{ vlan_id }}"
+        name: "{{ vlan_name }}"
+
+  - name: "Save Config"
+    nxos_config:
+      save_when: "modified"
