@@ -21,3 +21,6 @@ This will reboot the devices.
 
 ## claim_device_rename.py
 This will claim devices to an org & network, and rename them using the devices.csv values.
+
+## clone_switch_ports_config.py
+This will clone switch port configs from a switch to another switch. It will prompt for a serial number to copy FROM and a serial number to copy TO.
