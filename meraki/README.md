@@ -24,3 +24,6 @@ This will claim devices to an org & network, and rename them using the devices.c
 
 ## clone_switch_ports_config.py
 This will clone switch port configs from a switch to another switch. It will prompt for a serial number to copy FROM and a serial number to copy TO.
+
+## rename_networks.py
+This will rename networks by moving the second and third index in a string that was split into a list, and moving that to the end of the string.
