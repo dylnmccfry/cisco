@@ -1,7 +1,7 @@
-import requests, json, base64, sys
+import requests, json, base64, sys, getpass
 
-user = sys.argv[1]
-password = sys.argv[2]
+user = input("Username: ")
+password = getpass.getpass()
 ise1 = 'SERVER1.domain.com'
 endpoint_group_name = 'ENDPOINT GROUP NAME'
 
