@@ -20,9 +20,13 @@ with open("macs.txt") as file:
 for host_mac in macs:
     url = f"https://{ise1}:9060/ers/config/endpoint/name/{host_mac}"
     response = requests.request('GET', url, headers=headers)
-    endpoint_json = json.loads(response.text)
-    endpoint_id = (endpoint_json['ERSEndPoint']['id'])
-    #print(endpoint_id)
-    url = f"https://{ise1}:9060/ers/config/endpoint/{endpoint_id}"
-    response = requests.delete(url, headers=headers)
-    print('Deleteing endpoint',response.status_code)
+#If endpoint is not found 404 handling
+    if response.status_code == 404:
+        print(host_mac,'was not found')
+#If endpoint is found, use it's ID to delete it
+    else:
+        endpoint_json = json.loads(response.text)
+        endpoint_id = (endpoint_json['ERSEndPoint']['id'])
+        url = f"https://{ise1}:9060/ers/config/endpoint/{endpoint_id}"
+        response = requests.delete(url, headers=headers)
+        print('Deleting endpoint',response.status_code)
