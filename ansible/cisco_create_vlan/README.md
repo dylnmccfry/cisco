@@ -20,10 +20,16 @@ ansible-playbook cisco_create_vlan.yml -u USERNAME --ask-pass
 
 You can find which HSRP groups are already in use by executing:
 
-*show hsrp all | i Group*
+**switch#** *show hsrp all | i Group*
+
 *Vlan7 - Group 7 (HSRP-V2) (IPv4)*
+
 *Vlan8 - Group 8 (HSRP-V2) (IPv4)*
+
 *Vlan12 - Group 12 (HSRP-V2) (IPv4)*
+
 *Vlan12 - Group 128 (HSRP-V2) (IPv4)*
+
 *Vlan18 - Group 18 (HSRP-V2) (IPv4)*
+
 *Vlan28 - Group 28 (HSRP-V2) (IPv4)*
