@@ -16,6 +16,8 @@ You will need to fill in the hosts file with the hosts that you want this to run
 ```python
 ansible-playbook cisco_create_vlan.yml -u USERNAME --ask-pass
 ```
+## Notes
+
 You can find which HSRP groups are already in use by executing:
 
 *show hsrp all | i Group*
