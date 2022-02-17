@@ -6,8 +6,9 @@
   - name: Creating VLAN on 9500s
     ios_vlans:
       config:
-      - vlan_id: "{{ vlan_id }}"
-        name: "{{ vlan_name }}"
+      - name: "{{ vlan_name }}"
+        vlan_id: "{{ vlan_id }}"
+
 
   - name: "Save Config"
     ios_config:
