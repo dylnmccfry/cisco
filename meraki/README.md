@@ -27,3 +27,13 @@ This will clone switch port configs from a switch to another switch. It will pro
 
 ## rename_networks.py
 This will rename networks by moving the second and third index in a string that was split into a list, and moving that to the end of the string.
+
+## set_managment_interface_to_dhcp_no_check.py
+This will read the serial numbers from the devices.csv file and update the management interface to use the VLAN you specify. For example:
+
+```
+Specify the VLAN to use, if using the Native VLAN for an Access Point, leave this blank and press enter.
+30
+2029-09-18 10:53:16       meraki:     INFO > devices, updateDeviceManagementInterface - 200 OK
+{'wan1': {'usingStaticIp': False, 'vlan': 30}}
+```
